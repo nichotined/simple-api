@@ -4,9 +4,9 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="simple-api",
-    version="0.1.0",
-    author="Nicholas Frederick",
+    name="api-nichotined",
+    version="0.1.1",
+    author="Nicholas Frederich",
     author_email="nicholas.frederich.lagaunne@gmail.com",
     description="Simple lib for testing rest API",
     long_description=long_description,

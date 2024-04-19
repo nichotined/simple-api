@@ -1,12 +1,18 @@
-# SIMPLE-API
+# API-NICHOTINED
+
 A package that will help on creating session upon making rest API request.
 
+Installation:
+```commandline
+pip install api-nichotined
+```
+
 Sample usage:
+
 ```commandline
 import logging
 
-from src import RestApi
-
+from api_nichotined import RestApi
 
 class TestApis:
     def __init__(self, base_url=""):

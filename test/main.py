@@ -1,6 +1,6 @@
 import logging
 
-from src import RestApi
+from api_nichotined import RestApi
 
 
 class TestApis:
