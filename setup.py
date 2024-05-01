@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="api-nichotined",
-    version="0.1.1",
+    version="0.1.6",
     author="Nicholas Frederich",
     author_email="nicholas.frederich.lagaunne@gmail.com",
     description="Simple lib for testing rest API",
@@ -16,6 +16,7 @@ setuptools.setup(
     install_requires=[
         'requests',
         'curlify',
+        'google-cloud-bigquery'
     ],
     classifiers=[
         "Programming Language :: Python :: 3",

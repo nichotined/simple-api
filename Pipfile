@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 requests = "*"
 curlify = "*"
+google-cloud-bigquery = "*"
 
 [requires]
 python_version = "3.11"

@@ -1,18 +1,26 @@
 import logging
 
-from api_nichotined import RestApi
+from api_nichotined import Api, BigQuery
 
 
-class TestApis:
-    def __init__(self, base_url=""):
-        self.client = RestApi(base_url=base_url)
+class TestApi(Api):
+    def __init__(self):
+        super().__init__("https://restcountries.com")
 
     def get_upload(self):
-        return self.client.get(path="/v3.1/name/indonesia")
+        return self.get(path="/v3.1/name/indonesia")
+
+    @classmethod
+    def init_bigquery(cls):
+        bq = BigQuery()
+
+        bq.authenticate_client_with_json_cred_path("cred.json")
+        res = bq.get_rows_from(query="""SELECT * FROM `dummy` LIMIT 1000""")
+        assert type(res[0].column_a) == str
 
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-    api = TestApis(base_url="https://restcountries.com")
-    api.get_upload().status_code
+    response = TestApi().get_upload()
+    TestApi.init_bigquery()

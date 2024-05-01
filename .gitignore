@@ -108,3 +108,4 @@ venv.bak/
 .idea/
 API/modules/mocker/mocker_internal.py
 header.txt
+test/cred.json
