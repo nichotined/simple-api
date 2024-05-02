@@ -3,6 +3,8 @@ import logging
 import curlify
 from requests import Response, Session
 
+from api_nichotined.core.response import ResponseWrapper
+
 
 class Api:
     def __init__(self, base_url):
@@ -14,14 +16,16 @@ class Api:
         if self.session:
             self.session.close()
 
-    def _make_request(self, method, path, params=None, data=None, json_data=None, headers=None, auth=None) -> Response:
+    def _make_request(self, method, path, params=None, data=None, json_data=None, headers=None,
+                      auth=None) -> ResponseWrapper:
         url = self.base_url + path
         self.logger.info(f"Making {method} request to {url}")
 
         response = self.session.request(method, url, params=params, data=data, json=json_data, headers=headers,
                                         auth=auth)
+
         self.log_response(response)
-        return response
+        return ResponseWrapper(response)
 
     def log_response(self, response: Response):
         curl = curlify.to_curl(response.request)
@@ -29,18 +33,18 @@ class Api:
         self.logger.info(f"Response received with status code {response.status_code}")
         self.logger.info(response.json())
 
-    def get(self, path, params=None, data=None, json_data=None, headers=None, auth=None) -> Response:
+    def get(self, path, params=None, data=None, json_data=None, headers=None, auth=None) -> ResponseWrapper:
         return self._make_request("GET", path, params=params, data=data, headers=headers, json_data=json_data,
                                   auth=auth)
 
-    def post(self, path, params=None, data=None, json_data=None, headers=None, auth=None) -> Response:
+    def post(self, path, params=None, data=None, json_data=None, headers=None, auth=None) -> ResponseWrapper:
         return self._make_request("POST", path, params=params, data=data, headers=headers, json_data=json_data,
                                   auth=auth)
 
-    def put(self, path, params=None, data=None, json_data=None, headers=None, auth=None) -> Response:
+    def put(self, path, params=None, data=None, json_data=None, headers=None, auth=None) -> ResponseWrapper:
         return self._make_request("PUT", path, params=params, data=data, headers=headers, json_data=json_data,
                                   auth=auth)
 
-    def delete(self, path, params=None, data=None, json_data=None, headers=None, auth=None) -> Response:
+    def delete(self, path, params=None, data=None, json_data=None, headers=None, auth=None) -> ResponseWrapper:
         return self._make_request("DELETE", path, params=params, data=data, headers=headers, json_data=json_data,
                                   auth=auth)

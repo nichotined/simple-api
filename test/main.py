@@ -23,4 +23,7 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
     response = TestApi().get_upload()
-    TestApi.init_bigquery()
+    assert response.is_array() is True
+    assert response.is_success() is True
+
+    # TestApi.init_bigquery()
