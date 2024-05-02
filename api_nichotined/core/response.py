@@ -1,4 +1,4 @@
-from requests import Response
+from requests import Response, PreparedRequest
 from requests.status_codes import codes
 
 
@@ -7,17 +7,25 @@ class JsonToPythonHook:
         self.__dict__ = json_data
 
 
-class ResponseWrapper:
+class ResponseHandler:
     def __init__(self, response: Response):
-        self._response = response
+        self._resp = response
 
     @property
-    def response(self):
-        return self._response
+    def resp(self) -> Response:
+        return self._resp
+
+    @property
+    def req(self) -> PreparedRequest:
+        return self._resp.request
 
     @property
     def body(self):
-        return self._response.json(object_hook=JsonToPythonHook)
+        return self._resp.json(object_hook=JsonToPythonHook)
+
+    @property
+    def status_code(self) -> int:
+        return self._resp.status_code
 
     def is_array(self) -> bool:
         """
@@ -31,11 +39,11 @@ class ResponseWrapper:
         Check if status code is equal to 200
         :return: bool
         """
-        return self._response.status_code == codes.okay
+        return self._resp.status_code == codes.okay
 
     def is_internal_server_error(self):
         """
         Check if status code is equal to 500
         :return: bool
         """
-        return self._response.status_code == codes.internal_server_error
+        return self._resp.status_code == codes.internal_server_error
