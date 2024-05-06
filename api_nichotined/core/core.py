@@ -7,10 +7,11 @@ from api_nichotined.core.response import ResponseHandler
 
 
 class Api:
-    def __init__(self, base_url):
+    def __init__(self, base_url, is_log_curlify=True):
         self.base_url = base_url
         self.session = Session()
         self.logger = logging.getLogger(__name__)
+        self.is_log_curlify = is_log_curlify
 
     def close_session(self):
         if self.session:
@@ -28,8 +29,10 @@ class Api:
         return ResponseHandler(response)
 
     def log_response(self, response: Response):
-        curl = curlify.to_curl(response.request)
-        self.logger.info(curl)
+        if self.is_log_curlify:
+            curl = curlify.to_curl(response.request)
+            self.logger.info(curl)
+            
         self.logger.info(f"Response received with status code {response.status_code}")
         self.logger.info(response.json())
 
