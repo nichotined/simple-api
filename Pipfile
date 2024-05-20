@@ -8,6 +8,7 @@ requests = "*"
 curlify = "*"
 google-cloud-bigquery = "*"
 psycopg2 = "*"
+redis = "*"
 
 [requires]
 python_version = "3.11"

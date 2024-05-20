@@ -45,7 +45,7 @@ class Postgres:
         self.connection: Optional[_connection] = None
         self.cursor: Optional[_cursor] = None
         self.config: Dict[str, str] = config
-        logger.info("Postgres instance created with config: %s", config)
+        logger.info("Postgres instance created with config: %s.", config)
 
     def connect(self) -> None:
         try:
@@ -53,13 +53,13 @@ class Postgres:
             self.cursor = self.connection.cursor()
             logger.info("Connected to the database")
         except psycopg2.DatabaseError as e:
-            logger.error("Database connection failed: %s", e)
+            logger.error("Database connection failed: %s.", e)
             raise
 
     def close(self) -> None:
         if self.cursor:
             self.cursor.close()
-            logger.info("Cursor closed")
+            logger.info("Postgres cursor closed.")
         if self.connection:
             self.connection.close()
-            logger.info("Connection closed")
+            logger.info("Postgres connection closed.")
